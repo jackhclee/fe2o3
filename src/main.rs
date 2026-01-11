@@ -1,17 +1,40 @@
-use domain::*;
+use fe2o3::domain::*;
+use log::{info};
+use serde::Serialize;
 
-fn print_book(discounted: &impl Discounted) -> () {
+fn print_book(discounted: &impl Discounted, ctr: &mut i32) -> () {
+    *ctr += 1;
+    println!("This is print_book {}", discounted.less(0.9));
     println!("This is print_book {}", discounted.less(0.9))
 }
 
+
 fn main() {
+    log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
+
+    info!("HELLO WORLD");
+
+    let mut prog_ctr: i32 = 0;
     println!("Hello, world!");
     let mut book = Book {
         title: String::from("AAA"),
         price: 100,
     };
 
-    print_book(&book);
+    let p1 = Person { person_id: 678 , nick_name: None };
+
+    println!("{:?}", p1);
+    println!("{}", serde_json::to_string(&p1).unwrap());
+
+    println!("{}", serde_yaml::to_string(&p1).unwrap());
+
+
+    println!("{}", Option::is_none(&p1.nick_name));
+
+
+
+    print_book(&book, &mut prog_ctr);
+    print_book(&book, &mut prog_ctr);
     println!(
         "{:?} discounted_price ${} (less ${})",
         book,
@@ -25,35 +48,6 @@ fn main() {
         book.discounted_price(0.9),
         book.less(0.9)
     );
-}
 
-pub mod domain {
-
-    pub trait Discounted {
-        fn discounted_price(&self, discount_rate: f32) -> f32;
-
-        fn less(&self, discount_rate: f32) -> f32;
-
-        fn update_price(&mut self, discount_rate: f32) -> ();
-    }
-
-    #[derive(Debug)]
-    pub struct Book {
-        pub title: String,
-        pub price: i32,
-    }
-
-    impl Discounted for Book {
-        fn discounted_price(&self, discount_rate: f32) -> f32 {
-            self.price as f32 * discount_rate
-        }
-
-        fn less(&self, discount_rate: f32) -> f32 {
-            self.price as f32 - self.discounted_price(discount_rate)
-        }
-
-        fn update_price(&mut self, discount_rate: f32) -> () {
-            self.price = self.discounted_price(discount_rate) as i32;
-        }
-    }
+    println!("prog_ctr {}", prog_ctr)
 }
