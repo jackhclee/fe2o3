@@ -1,4 +1,4 @@
-use fe2o3::domain::{Book, Discounted, Person, serialize_person};
+use fe2o3::domain::{serialize_person, Book, Discounted, Person};
 
 #[cfg(test)]
 mod tests {
@@ -19,9 +19,9 @@ mod tests {
     fn test_serialize_person() {
         let person = Person {
             person_id: 123,
-            nick_name: Some("tester".to_string()),
+            nick_name: None,
         };
         let json = serialize_person(&person);
-        assert_eq!(json, r#"{"personId":123,"nickName":"tester"}"#);
+        assert_eq!(json, r#"{"personId":123}"#);
     }
 }

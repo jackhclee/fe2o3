@@ -2,10 +2,16 @@
 name = "fe2o3"
 version = "0.1.0"
 edition = "2021"
+default-run = "fe2o3"
 
 [dependencies]
+axum = "0.8.8"
+chrono = "0.4.43"
+im = "15.1.0"
+kafka = "0.10.0"
 log = "0.4.29"
 log4rs = "1.4.0"
 serde = "1.0.228"
 serde_json = "1.0.149"
 serde_yaml = "0.9.34"
+tokio = { version = "1", features = ["full"] }

@@ -1,5 +1,6 @@
-use serde::Serialize;
-
+/// Domain is the place where domain objects belong
+///
+/// This is second send
 pub mod domain {
 
     use serde::Serialize;
@@ -32,13 +33,12 @@ pub mod domain {
         }
     }
 
-    #[derive(Debug, Serialize, PartialEq)]
-    #[serde(rename_all = "camelCase")]
+    #[derive(Debug, Serialize)]
     pub struct Person {
         pub person_id: i64,
 
         #[serde(default, skip_serializing_if = "Option::is_none")]
-        pub nick_name: Option<String>
+        pub nick_name: Option<String>,
     }
 
     pub fn serialize_person(person: &Person) -> String {
